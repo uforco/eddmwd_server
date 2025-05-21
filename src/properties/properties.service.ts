@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { CreatePropertyDto } from './dto/create-property.dto';
 import { UpdatePropertyDto } from './dto/update-property.dto';
 import { PrismaClientService } from 'src/prisma_client/prisma_client.service';
@@ -16,39 +16,147 @@ export class PropertiesService {
   }
 
   async create(createPropertyDto: CreatePropertyDto) {
-
     const {property, location, agent, image} = createPropertyDto;
-
     let result;
 
     if(image){
       result = await this.cloudinary.uploadImage(image.buffer);
     }
 
-    const agentData = await this.prisma.user.create({
-      data: JSON.parse(agent.toString())
-    });
+    try {
+      const agentData = await this.prisma.user.create({
+        data: agent
+      });
+      const newData = await this.prisma.property.create({
+        data: {
+          rooms: property.rooms,
+          size: property.size,
+          bathrooms: property.bathrooms,
+          beds: property.beds,
+          available_for: property.available_for,
+          short_desc: property.short_desc,
+          image_path: result ? result['secure_url'] : '',
+          price: property.price,
+          desc: property.desc,
+          owner_id: agentData.id,
+          location: {
+            create: location,
+          },
 
-    const locationData = await this.prisma.location.create({
-      data: JSON.parse(location.toString())
-    });
-
-    let p = JSON.parse(property.toString());
-
-    const newProperty = {...p, location_id: locationData.id, owner_id: agentData.id, image_path: result ? result['secure_url'] : ''};
-
-    const propertyData = await this.prisma.property.create({
-      data: newProperty
-    });
-    return propertyData;
+        },
+        select: {
+          rooms: true,
+          size: true,
+          bathrooms: true,
+          beds: true,
+          available_for: true,
+          short_desc: true,
+          image_path: true,
+          desc: true,
+          owner: true,
+          location: true,
+        },
+      });
+      return {
+        message: 'Property created successfully',
+        status: 'success',
+        data: newData,
+      };
+    } catch {
+      throw new InternalServerErrorException();
+    }
   }
 
-  findAll() {
-    return `This action returns all properties`;
+  async findAll() {
+    try {
+      const data = await this.prisma.property.findMany({
+        select: {
+          id: true,
+          rooms: true,
+          size: true,
+          bathrooms: true,
+          price: true,
+          beds: true,
+          available_for: true,
+          short_desc: true,
+          image_path: true,
+          desc: true,
+          owner: true,
+          location: {
+            select: {
+              address: true,
+              city: true,
+              state: true,
+              country: true,
+              postal_code: true,
+            },
+          },
+        },
+      });
+      if (data.length < 1) {
+        return {
+          message: 'Data Not Found',
+          data: [],
+        };
+      }
+      return {
+        message: 'successful',
+        data,
+      };
+    } catch {
+      throw new InternalServerErrorException();
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} property`;
+  async findOne(id: number) {
+    try {
+      const data = await this.prisma.property.findUnique({
+        where: {
+          id: id,
+        },
+        select: {
+          id: true,
+          rooms: true,
+          size: true,
+          bathrooms: true,
+          price: true,
+          beds: true,
+          available_for: true,
+          short_desc: true,
+          image_path: true,
+          desc: true,
+          owner: true,
+          location: {
+            select: {
+              address: true,
+              city: true,
+              state: true,
+              country: true,
+              postal_code: true,
+            },
+          },
+        },
+      });
+
+      if (!data) {
+        return {
+          message: 'Data Not Found',
+          data: {},
+        };
+      }
+
+      return {
+        message: 'successful',
+        data,
+      };
+    } catch {
+      throw new InternalServerErrorException();
+    }
+  }
+
+  async findquery(query: any) {
+    console.log(query);
+    return 'findquery-shar';
   }
 
   update(id: number, updatePropertyDto: UpdatePropertyDto) {

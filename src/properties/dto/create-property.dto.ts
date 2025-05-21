@@ -15,12 +15,13 @@ export class PropertyDto {
   size: number;
   bathrooms: number;
   beds: number;
+  price: number;
   available_for: AvailableFor;
   short_desc: string;
-  desc: string;
-  location_id: string;
-  owner_id: number;
   image_path: string;
+  desc: string;
+  location: LocationDto;
+  owner_id: number;
 }
 
 export class LocationDto {

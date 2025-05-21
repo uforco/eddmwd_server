@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Query } from '@nestjs/common';
 import { PropertiesService } from './properties.service';
 import { CreatePropertyDto } from './dto/create-property.dto';
 import { UpdatePropertyDto } from './dto/update-property.dto';
@@ -20,10 +20,20 @@ export class PropertiesController {
   findAll() {
     return this.propertiesService.findAll();
   }
+// @Query() query: { propertiestype: string, area: string }
+  @Get('quarry')
+  findQuarry(
+    @Query('propertiestype') propertiestype: string,
+    @Query('area') area: string
+  ){
+    // console.log('query', propertiestype, area)
+    return this.propertiesService.findquery({propertiestype, area})
+  }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.propertiesService.findOne(+id);
+    // return id;
   }
 
   @Patch(':id')
