@@ -8,10 +8,17 @@ export class PropertiesService {
   constructor(private prisma:PrismaClientService){}
 
   async create(createPropertyDto: CreatePropertyDto) {
+
+    // const location = await this.prisma.location.create({
+    //   data:
+    // });
     const newData = await this.prisma.property.create({
       data: createPropertyDto
     });
-    return 
+    return {
+      message: "Property created successfully",
+      status: "success"
+    }
   }
 
   findAll() {
