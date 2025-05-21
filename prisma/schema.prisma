@@ -9,10 +9,10 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
-  phone String
+  id         Int        @id @default(autoincrement())
+  email      String     @unique
+  name       String?
+  phone      String
   properties Property[] @relation("UserProperties")
 }
 
@@ -27,7 +27,7 @@ model Location {
 }
 
 model Property {
-  id            Int           @id @default(autoincrement())
+  id            Int          @id @default(autoincrement())
   rooms         Int
   size          Int
   bathrooms     Int
@@ -35,12 +35,10 @@ model Property {
   available_for AvailableFor
   short_desc    String
   desc          String
-
   location_id   String
-  location      Location      @relation(fields: [location_id], references: [id], name: "PropertyLocation")
-
   owner_id      Int
-  owner         User          @relation(fields: [owner_id], references: [id], name: "UserProperties")
+  location      Location     @relation("PropertyLocation", fields: [location_id], references: [id])
+  owner         User         @relation("UserProperties", fields: [owner_id], references: [id])
 }
 
 enum AvailableFor {
