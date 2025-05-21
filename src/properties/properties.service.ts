@@ -25,22 +25,23 @@ export class PropertiesService {
 
     try {
       const agentData = await this.prisma.user.create({
-        data: agent
+        data: JSON.parse(agent.toString())
       });
+      const propertyData = JSON.parse(property.toString());
       const newData = await this.prisma.property.create({
         data: {
-          rooms: property.rooms,
-          size: property.size,
-          bathrooms: property.bathrooms,
-          beds: property.beds,
-          available_for: property.available_for,
-          short_desc: property.short_desc,
+          rooms: propertyData.rooms,
+          size: propertyData.size,
+          bathrooms: propertyData.bathrooms,
+          beds: propertyData.beds,
+          available_for: propertyData.available_for,
+          short_desc: propertyData.short_desc,
           image_path: result ? result['secure_url'] : '',
-          price: property.price,
-          desc: property.desc,
+          price: propertyData.price,
+          desc: propertyData.desc,
           owner_id: agentData.id,
           location: {
-            create: location,
+            create: JSON.parse(location.toString()),
           },
 
         },
@@ -62,8 +63,9 @@ export class PropertiesService {
         status: 'success',
         data: newData,
       };
-    } catch {
-      throw new InternalServerErrorException();
+    } catch (e){
+      console.log(e)
+      // throw new InternalServerErrorException();
     }
   }
 
