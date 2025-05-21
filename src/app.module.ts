@@ -7,5 +7,6 @@ import { UsersModule } from './users/users.module';
   imports: [PrismaClientModule, PropertiesModule, UsersModule],
   controllers: [],
   providers: [],
+  exports: [PrismaClientModule]
 })
 export class AppModule {}

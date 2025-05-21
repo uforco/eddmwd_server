@@ -10,8 +10,9 @@ export class CreatePropertyDto {
   beds: number;
   available_for: AvailableFor;
   short_desc: string;
+  image_path: string;
   desc: string;
-  location_id: string;
+  location: LocationDto;
   owner_id: number;
 }
 

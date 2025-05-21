@@ -9,20 +9,38 @@ export class PropertiesService {
 
   async create(createPropertyDto: CreatePropertyDto) {
 
-    // const location = await this.prisma.location.create({
-    //   data:
-    // });
+    console.log("createPropertyDto", createPropertyDto)
+    
     const newData = await this.prisma.property.create({
-      data: createPropertyDto
+      data: {
+        rooms: createPropertyDto.rooms,
+        size: createPropertyDto.size,
+        bathrooms: createPropertyDto.bathrooms,
+        beds: createPropertyDto.beds,
+        available_for: createPropertyDto.available_for,
+        short_desc: createPropertyDto.short_desc,
+        image_path: createPropertyDto.image_path,
+        desc: createPropertyDto.desc,
+        owner_id: createPropertyDto.owner_id,
+        location: {
+          create: createPropertyDto.location
+        }      
+      }
     });
     return {
       message: "Property created successfully",
-      status: "success"
+      status: "success",
+      data: newData
     }
   }
 
   findAll() {
     return `This action returns all properties`;
+  }
+
+  async findquery(query: any){
+    console.log(query)
+    return 'findquery-shar';
   }
 
   findOne(id: number) {

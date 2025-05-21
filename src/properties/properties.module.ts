@@ -8,5 +8,6 @@ import { PrismaClientModule } from 'src/prisma_client/prisma_client.module';
   imports: [PrismaClientModule],
   controllers: [PropertiesController],
   providers: [PropertiesService],
+  
 })
 export class PropertiesModule {}
