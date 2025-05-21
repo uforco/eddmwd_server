@@ -8,6 +8,7 @@ export class CreatePropertyDto {
   size: number;
   bathrooms: number;
   beds: number;
+  price: number;
   available_for: AvailableFor;
   short_desc: string;
   image_path: string;

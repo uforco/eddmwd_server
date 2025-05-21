@@ -29,6 +29,7 @@ export class PropertiesController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.propertiesService.findOne(+id);
+    // return id;
   }
 
   @Patch(':id')

@@ -33,6 +33,7 @@ model Property {
   size          Int
   bathrooms     Int
   beds          Int
+  price         Float
   available_for AvailableFor
   short_desc    String
   desc          String
