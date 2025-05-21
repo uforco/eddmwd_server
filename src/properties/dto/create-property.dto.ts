@@ -25,8 +25,4 @@ export class LocationDto {
 }
 
 // Optional: Define Owner class as a DTO for nested input
-export class OwnerDto {
-  email: string;
-  name: string;
-  phone: string;
-}
+
