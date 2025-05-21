@@ -4,6 +4,13 @@ export enum AvailableFor {
 }
 
 export class CreatePropertyDto {
+  property: PropertyDto;
+  image: Express.Multer.File;
+  location: LocationDto;
+  agent: OwnerDto;
+}
+
+export class PropertyDto {
   rooms: number;
   size: number;
   bathrooms: number;
@@ -13,9 +20,9 @@ export class CreatePropertyDto {
   desc: string;
   location_id: string;
   owner_id: number;
+  image_path: string;
 }
 
-// Optional: Define Location class as a DTO for nested input
 export class LocationDto {
   address: string;
   city: string;
@@ -24,5 +31,9 @@ export class LocationDto {
   country: string;
 }
 
-// Optional: Define Owner class as a DTO for nested input
+export class OwnerDto {
+  email: string;
+  name: string;
+  phone: string;
+}
 

@@ -41,6 +41,8 @@ model Property {
 
   owner_id      Int
   owner         User          @relation(fields: [owner_id], references: [id], name: "UserProperties")
+  price         Int
+  image_path    String
 }
 
 enum AvailableFor {
