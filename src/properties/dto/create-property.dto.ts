@@ -44,8 +44,8 @@ export class PropertyDto {
   @ApiProperty({ example: 'Cozy family home in the suburbs' })
   short_desc: string;
 
-  @ApiProperty({ example: '/uploads/house.jpg' })
-  image_path: string;
+  // @ApiProperty({ example: '/uploads/house.jpg' })
+  // image_path: string;
 
   @ApiProperty({ example: 'A well-lit house with 2 floors, a garden, and garage.' })
   desc: string;
