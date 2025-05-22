@@ -13,18 +13,17 @@ model User {
   email      String     @unique
   name       String?
   phone      String
-  role       UserType
   properties Property[] @relation("UserProperties")
 }
 
 model Location {
-  id          String     @id @default(uuid())
+  id          String   @id @default(uuid())
   address     String
   city        String
   postal_code String
   state       String
   country     String
-  property_id Int @unique
+  property_id Int      @unique
   properties  Property @relation(fields: [property_id], references: [id])
 }
 
@@ -42,7 +41,6 @@ model Property {
   image_path    String
   location      Location?
   owner         User         @relation("UserProperties", fields: [owner_id], references: [id])
-
 }
 
 enum AvailableFor {
