@@ -16,7 +16,7 @@ export class PropertiesService {
   }
 
   async create(createPropertyDto: CreatePropertyDto) {
-    const {property, location, image} = createPropertyDto;
+    const {property, image} = createPropertyDto;
     let result: any;
 
     if(image){
@@ -38,7 +38,13 @@ export class PropertiesService {
           desc: propertyData.desc,
           owner_id: propertyData.owner_id,
           location: {
-            create: JSON.parse(location.toString()),
+            create: {
+              address: propertyData.location.address,
+              city: propertyData.location.city,
+              state: propertyData.location.state,
+              country: propertyData.location.country,
+              postal_code: propertyData.location.postal_code,
+            }
           },
 
         },

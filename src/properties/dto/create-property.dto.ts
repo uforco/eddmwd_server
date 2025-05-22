@@ -22,6 +22,9 @@ export class LocationDto {
   @ApiProperty({ example: 'USA' })
   country: string;
 }
+
+
+
 export class PropertyDto {
   @ApiProperty({ example: 3 })
   rooms: number;
@@ -76,9 +79,9 @@ export class CreatePropertyDto {
   @ApiProperty({ type: 'string', format: 'binary' })
   image: Express.Multer.File;
 
-  @ApiProperty({ type: LocationDto })
-  @Type(() => LocationDto)
-  location: LocationDto;
+  // @ApiProperty({ type: LocationDto })
+  // @Type(() => LocationDto)
+  // location: LocationDto;
 
   // @ApiProperty({ type: OwnerDto })
   // @Type(() => OwnerDto)
