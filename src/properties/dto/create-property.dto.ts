@@ -57,16 +57,16 @@ export class PropertyDto {
   owner_id: number;
 }
 
-export class OwnerDto {
-  @ApiProperty({ example: 'john@example.com' })
-  email: string;
+// export class OwnerDto {
+//   @ApiProperty({ example: 'john@example.com' })
+//   email: string;
 
-  @ApiProperty({ example: 'John Doe' })
-  name: string;
+//   @ApiProperty({ example: 'John Doe' })
+//   name: string;
 
-  @ApiProperty({ example: '+1-123-456-7890' })
-  phone: string;
-}
+//   @ApiProperty({ example: '+1-123-456-7890' })
+//   phone: string;
+// }
 
 export class CreatePropertyDto {
   @ApiProperty({ type: PropertyDto })
@@ -80,9 +80,9 @@ export class CreatePropertyDto {
   @Type(() => LocationDto)
   location: LocationDto;
 
-  @ApiProperty({ type: OwnerDto })
-  @Type(() => OwnerDto)
-  agent: OwnerDto;
+  // @ApiProperty({ type: OwnerDto })
+  // @Type(() => OwnerDto)
+  // agent: OwnerDto;
 }
 
 

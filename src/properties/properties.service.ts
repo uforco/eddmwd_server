@@ -16,17 +16,14 @@ export class PropertiesService {
   }
 
   async create(createPropertyDto: CreatePropertyDto) {
-    const {property, location, agent, image} = createPropertyDto;
-    let result;
+    const {property, location, image} = createPropertyDto;
+    let result: any;
 
     if(image){
       result = await this.cloudinary.uploadImage(image.buffer);
     }
 
     try {
-      const agentData = await this.prisma.user.create({
-        data: JSON.parse(agent.toString())
-      });
       const propertyData = JSON.parse(property.toString());
       const newData = await this.prisma.property.create({
         data: {
@@ -39,7 +36,7 @@ export class PropertiesService {
           image_path: result ? result['secure_url'] : '',
           price: propertyData.price,
           desc: propertyData.desc,
-          owner_id: agentData.id,
+          owner_id: propertyData.owner_id,
           location: {
             create: JSON.parse(location.toString()),
           },
@@ -64,8 +61,7 @@ export class PropertiesService {
         data: newData,
       };
     } catch (e){
-      console.log(e)
-      // throw new InternalServerErrorException();
+      throw new InternalServerErrorException();
     }
   }
 
