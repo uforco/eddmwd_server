@@ -3,6 +3,7 @@ import { PropertiesService } from './properties.service';
 import { CreatePropertyDto } from './dto/create-property.dto';
 import { UpdatePropertyDto } from './dto/update-property.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiBody, ApiConsumes } from '@nestjs/swagger';
 
 @Controller('properties')
 export class PropertiesController {
@@ -10,6 +11,8 @@ export class PropertiesController {
 
   @Post()
   @UseInterceptors(FileInterceptor('image'))
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({ type: CreatePropertyDto })
   create(@Body() createPropertyDto: CreatePropertyDto, @UploadedFile() file: Express.Multer.File) {
     
     const data = {...createPropertyDto, image: file};
